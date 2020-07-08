@@ -1,0 +1,30 @@
+﻿<Window x:Class="TCode_Remote.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TCode_Remote"
+        mc:Ignorable="d"
+        Title="About" Height="346.702" Width="416.491" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Label x:Name="AboutLabel" Content="TCode Remote v0.12b" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="126,18,129,0" Width="155" HorizontalContentAlignment="Center"/>
+        <Label x:Name="TCodeVersionLabel" Content="TCode v0.2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="126,49,129,0" Width="155" HorizontalContentAlignment="Center"/>
+        <Label x:Name="CopyrightLabel" Content="Copyright © 2020" HorizontalAlignment="Center" Margin="126,80,129,0" VerticalAlignment="Top" Width="155" HorizontalContentAlignment="Center"/>
+        <TextBlock x:Name="PatreonLinkTextBlock" Margin="126,113,129,178" Width="155" TextAlignment="Center">           
+            <Hyperlink NavigateUri="https://www.patreon.com/Khrull" RequestNavigate="PatreonHyperlink_RequestNavigate">
+                Patreon
+            </Hyperlink>
+        </TextBlock>
+        <TextBlock x:Name="LicenseLinkTextBlock" Margin="10,145,10,10" TextWrapping="Wrap"> 
+            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+            NON COMMERCIAL USE ONLY
+        </TextBlock>
+    </Grid>
+</Window>
