@@ -130,7 +130,7 @@ namespace TCode_Remote.Library.Handler
 					portnames.Select(n => new SerialDeviceModel()
 					{
 						Name = n,
-						FriendlyName = ports.FirstOrDefault(s => s.Contains(n)) ?? n
+						FriendlyName = ports.FirstOrDefault(s => s.Contains($"({n})")) ?? n
 					})
 				);
 				portsCollection.Add(new SerialDeviceModel() { Name = null, FriendlyName = "None" });

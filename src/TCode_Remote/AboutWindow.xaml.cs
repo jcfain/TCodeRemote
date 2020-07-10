@@ -15,7 +15,7 @@ namespace TCode_Remote
 			InitializeComponent();
 
 			var versionFull = SettingsHandler.GetVersion();
-			AboutLabel.Content = $"TCode Remote v{versionFull.Major}.{versionFull.Minor}b";
+			AboutLabel.Content = $"TCode Remote v{versionFull.Major}.{versionFull.Minor}a";
 			TCodeVersionLabel.Content = SettingsHandler.TCodeVersion;
 		}
 
