@@ -104,27 +104,27 @@ namespace TCode_Remote
 		public void OnPropertyChanged(object obj)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(obj)));
-		}
+		} 
 
 		private void RestoreSavedSettings()
 		{
-			XRangeSlider.Value = SettingsHandler.TCodeOutputRanges.GetValue(AxisNames.TcXUpDownL0 + "Mid");
-			XRangeSlider.SelectionStart = SettingsHandler.TCodeOutputRanges.GetValue(AxisNames.TcXUpDownL0 + "Min");
-			XRangeSlider.SelectionEnd = SettingsHandler.TCodeOutputRanges.GetValue(AxisNames.TcXUpDownL0 + "Max");
+			XRangeSlider.Value = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcXUpDownL0).Mid;
+			XRangeSlider.SelectionStart = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcXUpDownL0).Min;
+			XRangeSlider.SelectionEnd = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcXUpDownL0).Max;
 			LoadSliderUI(true, XRangeSlider, XRangeMin, XRangeMax);
 			LoadSliderUI(false, XRangeSlider, XRangeMin, XRangeMax);
 			XRangeMinLabel.Content = XRangeSlider.SelectionStart;
 			XRangeMaxLabel.Content = XRangeSlider.SelectionEnd;
-			YRollRangeSlider.Value = SettingsHandler.TCodeOutputRanges.GetValue(AxisNames.TcYRollR1 + "Mid");
-			YRollRangeSlider.SelectionStart = SettingsHandler.TCodeOutputRanges.GetValue(AxisNames.TcYRollR1 + "Min");
-			YRollRangeSlider.SelectionEnd = SettingsHandler.TCodeOutputRanges.GetValue(AxisNames.TcYRollR1 + "Max");
+			YRollRangeSlider.Value = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcYRollR1).Mid;
+			YRollRangeSlider.SelectionStart = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcYRollR1).Min;
+			YRollRangeSlider.SelectionEnd = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcYRollR1).Max;
 			LoadSliderUI(true, YRollRangeSlider, YRollRangeMin, YRollRangeMax);
 			LoadSliderUI(false, YRollRangeSlider, YRollRangeMin, YRollRangeMax);
 			YRollRangeMinLabel.Content = YRollRangeSlider.SelectionStart;
 			YRollRangeMaxLabel.Content = YRollRangeSlider.SelectionEnd;
-			XRollRangeSlider.Value = SettingsHandler.TCodeOutputRanges.GetValue(AxisNames.TcXRollR2 + "Mid");
-			XRollRangeSlider.SelectionStart = SettingsHandler.TCodeOutputRanges.GetValue(AxisNames.TcXRollR2 + "Min");
-			XRollRangeSlider.SelectionEnd = SettingsHandler.TCodeOutputRanges.GetValue(AxisNames.TcXRollR2 + "Max");
+			XRollRangeSlider.Value = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcXRollR2).Mid;
+			XRollRangeSlider.SelectionStart = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcXRollR2).Min;
+			XRollRangeSlider.SelectionEnd = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcXRollR2).Max;
 			LoadSliderUI(true, XRollRangeSlider, XRollRangeMin, XRollRangeMax);
 			LoadSliderUI(false, XRollRangeSlider, XRollRangeMin, XRollRangeMax);
 			XRollRangeMinLabel.Content = XRollRangeSlider.SelectionStart;
@@ -512,57 +512,57 @@ namespace TCode_Remote
 			}
 			if (slider == XRangeSlider)
 			{
-				SettingsHandler.TCodeOutputRanges[AxisNames.TcXUpDownL0 + "Mid"] = (int)slider.Value;
+				SettingsHandler.AvailableAxis[AxisNames.TcXUpDownL0].Mid = (int)slider.Value;
 			} 
 			else if (slider == YRollRangeSlider)
 			{
-				SettingsHandler.TCodeOutputRanges[AxisNames.TcYRollR1 + "Mid"] = (int)slider.Value;
+				SettingsHandler.AvailableAxis[AxisNames.TcYRollR1].Mid = (int)slider.Value;
 			}
 			else if (slider == XRollRangeSlider)
 			{
-				SettingsHandler.TCodeOutputRanges[AxisNames.TcXRollR2 + "Mid"] = (int)slider.Value;
+				SettingsHandler.AvailableAxis[AxisNames.TcXRollR2].Mid = (int)slider.Value;
 			}
 		}
 
 		private void XRangeMin_DragDelta(object sender, DragDeltaEventArgs e)
 		{
 			UpdateRangeSliderUI(true, XRangeSlider, XRangeMin, XRangeMax, e.HorizontalChange);
-			SettingsHandler.TCodeOutputRanges[AxisNames.TcXUpDownL0 + "Min"] = (int)XRangeSlider.SelectionStart;
+			SettingsHandler.AvailableAxis[AxisNames.TcXUpDownL0].Min = (int)XRangeSlider.SelectionStart;
 			XRangeMinLabel.Content = (int)XRangeSlider.SelectionStart;
 		}
 
 		private void XRangeMax_DragDelta(object sender, DragDeltaEventArgs e)
 		{
 			UpdateRangeSliderUI(false, XRangeSlider, XRangeMin, XRangeMax, e.HorizontalChange);
-			SettingsHandler.TCodeOutputRanges[AxisNames.TcXUpDownL0 + "Max"] = (int)XRangeSlider.SelectionEnd;
+			SettingsHandler.AvailableAxis[AxisNames.TcXUpDownL0].Max = (int)XRangeSlider.SelectionEnd;
 			XRangeMaxLabel.Content = (int)XRangeSlider.SelectionEnd;
 		}
 
 		private void YRollRangeMin_DragDelta(object sender, DragDeltaEventArgs e)
 		{
 			UpdateRangeSliderUI(true, YRollRangeSlider, YRollRangeMin, YRollRangeMax, e.HorizontalChange);
-			SettingsHandler.TCodeOutputRanges[AxisNames.TcYRollR1 + "Min"] = (int)YRollRangeSlider.SelectionStart;
+			SettingsHandler.AvailableAxis[AxisNames.TcYRollR1].Min = (int)YRollRangeSlider.SelectionStart;
 			YRollRangeMinLabel.Content = (int)YRollRangeSlider.SelectionStart;
 		}
 
 		private void YRollRangeMax_DragDelta(object sender, DragDeltaEventArgs e)
 		{
 			UpdateRangeSliderUI(false, YRollRangeSlider, YRollRangeMin, YRollRangeMax, e.HorizontalChange);
-			SettingsHandler.TCodeOutputRanges[AxisNames.TcYRollR1 + "Max"] = (int)YRollRangeSlider.SelectionEnd;
+			SettingsHandler.AvailableAxis[AxisNames.TcYRollR1].Max = (int)YRollRangeSlider.SelectionEnd;
 			YRollRangeMaxLabel.Content = (int)YRollRangeSlider.SelectionEnd;
 		}
 
 		private void XRollRangeMin_DragDelta(object sender, DragDeltaEventArgs e)
 		{
 			UpdateRangeSliderUI(true, XRollRangeSlider, XRollRangeMin, XRollRangeMax, e.HorizontalChange);
-			SettingsHandler.TCodeOutputRanges[AxisNames.TcXRollR2 + "Min"] = (int)XRollRangeSlider.SelectionStart;
+			SettingsHandler.AvailableAxis[AxisNames.TcXRollR2].Min = (int)XRollRangeSlider.SelectionStart;
 			XRollRangeMinLabel.Content = (int)XRollRangeSlider.SelectionStart;
 		}
 
 		private void XRollRangeMax_DragDelta(object sender, DragDeltaEventArgs e)
 		{
 			UpdateRangeSliderUI(false, XRollRangeSlider, XRollRangeMin, XRollRangeMax, e.HorizontalChange);
-			SettingsHandler.TCodeOutputRanges[AxisNames.TcXRollR2 + "Max"] = (int)XRollRangeSlider.SelectionEnd;
+			SettingsHandler.AvailableAxis[AxisNames.TcXRollR2].Max = (int)XRollRangeSlider.SelectionEnd;
 			XRollRangeMaxLabel.Content = (int)XRollRangeSlider.SelectionEnd;
 		}
 

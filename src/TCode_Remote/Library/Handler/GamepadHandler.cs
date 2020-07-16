@@ -89,6 +89,11 @@ namespace TCode_Remote.Library.Handler
 			{
 				while (IsRunning)
 				{
+					if (_selectedGamePad == null) 
+					{
+						Dispose();
+						return;
+					}
 					_tcodeFactory.Init();
 					GamepadReading reading = _selectedGamePad.GetCurrentReading();
 					var axisValues = new HashSet<ChannelValueModel>();

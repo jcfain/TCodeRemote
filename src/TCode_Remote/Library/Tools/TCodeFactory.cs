@@ -71,8 +71,8 @@ namespace TCode_Remote.Library.Tools
 			var tCode = new StringBuilder();
 			foreach (var value in values)
 			{
-				var minValue = SettingsHandler.TCodeOutputRanges.GetValue($"{value.Channel}Min");
-				var maxValue = SettingsHandler.TCodeOutputRanges.GetValue($"{value.Channel}Max");
+				var minValue = SettingsHandler.AvailableAxis.GetValue(value.Channel).Min;
+				var maxValue = SettingsHandler.AvailableAxis.GetValue(value.Channel).Max;
 				var clampedValue = maxValue == 0 ? value.Value : MathExtension.Clamp(value.Value, minValue, maxValue);
 				tCode.Append($"{value.Channel}{(clampedValue < 10 ? "0" : "")}{clampedValue}S{SettingsHandler.Speed} ");
 			}
@@ -81,8 +81,8 @@ namespace TCode_Remote.Library.Tools
 
 		private int CalculateTcodeRange(double value, string channel)
 		{
-			var output_end = SettingsHandler.AvailableAxis.GetValue(channel).End;
-			var output_start = SettingsHandler.AvailableAxis.GetValue(channel).Start;
+			var output_end = SettingsHandler.AvailableAxis.GetValue(channel).Max;
+			var output_start = SettingsHandler.AvailableAxis.GetValue(channel).Mid;
 			var slope = (output_end - output_start) / (_input_end - _input_start);
 			return (int)(output_start + slope * (value - _input_start));
 		}

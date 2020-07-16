@@ -23,8 +23,9 @@
                 <DataGridTextColumn Header="Key" Binding="{Binding Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="Friendly Name" Binding="{Binding Value.FriendlyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="Channel" Binding="{Binding Value.Channel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Start" Binding="{Binding Value.Start, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="End" Binding="{Binding Value.End, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Min" Binding="{Binding Value.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Mid" Binding="{Binding Value.Mid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Max" Binding="{Binding Value.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="TCode Channels" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>

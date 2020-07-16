@@ -113,7 +113,14 @@ namespace TCode_Remote.Library.Handler
 			}
 			if (_port != null && _port.IsOpen)
 			{
-				_port.Close();
+				try
+				{
+					_port.Close();
+				}
+				catch (Exception e)
+				{
+					Log.Dialog("Error closing serial port", e.Message);
+				}
 			}
 			UpdateConnected(false);
 			Stop();
@@ -130,7 +137,7 @@ namespace TCode_Remote.Library.Handler
 					portnames.Select(n => new SerialDeviceModel()
 					{
 						Name = n,
-						FriendlyName = ports.FirstOrDefault(s => s.Contains(n)) ?? n
+						FriendlyName = ports.FirstOrDefault(s => s.Contains($"({n})")) ?? n
 					})
 				);
 				portsCollection.Add(new SerialDeviceModel() { Name = null, FriendlyName = "None" });

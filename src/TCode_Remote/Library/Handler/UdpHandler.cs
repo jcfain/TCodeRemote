@@ -101,6 +101,7 @@ namespace TCode_Remote.Library.Handler
 				} catch(Exception error)
 				{
 					Log.Dialog("Error sending to udp client.", error.Message);
+					Dispose();
 				}
 			}
 		}
@@ -121,6 +122,7 @@ namespace TCode_Remote.Library.Handler
 				catch (Exception error)
 				{
 					Log.Dialog("Error sending gamepad data to udp client.", error.Message);
+					Dispose();
 				}
 			}
 		}

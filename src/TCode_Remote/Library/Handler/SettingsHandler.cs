@@ -51,18 +51,6 @@ namespace TCode_Remote.Library.Handler
 			}
 		}
 
-		private static Dictionary<string, int> _tCodeOutputRanges;
-		public static Dictionary<string, int> TCodeOutputRanges
-		{
-			get { return _tCodeOutputRanges; } 
-			private set
-			{
-				_tCodeOutputRanges = value;
-				SerializeMinMaxSettings();
-				PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(TCodeOutputRanges)));
-			}
-		}
-
 		private static Dictionary<string, string> _gamepadButtonMap;
 		public static Dictionary<string, string> GamepadButtonMap
 		{
@@ -255,7 +243,7 @@ namespace TCode_Remote.Library.Handler
 		}
 
 
-		private static bool _dataResetRequired = false;
+		private static bool _dataResetRequired = true;
 
 		static SettingsHandler()
 		{
@@ -275,7 +263,6 @@ namespace TCode_Remote.Library.Handler
 					Settings.Default.Version = versionDouble;
 				}
 
-				_tCodeOutputRanges = new JavaScriptSerializer().Deserialize<Dictionary<string, int>>(Settings.Default.TCodeOutputRanges);
 				_availableAxis = new JavaScriptSerializer().Deserialize<Dictionary<string, ChannelNameModel>>(Settings.Default.AvailableAxis);
 				_gamepadButtonMap = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(Settings.Default.GamepadButtonMap);
 				_inputAddress = Settings.Default.InputAddress;
@@ -312,17 +299,10 @@ namespace TCode_Remote.Library.Handler
 
 		public static void Save()
 		{
-			SerializeMinMaxSettings();
 			SerializeAvailableAxis();
 			SerializeGamepadMap();
 			Settings.Default.Save();
 			Settings.Default.Reload();
-		}
-
-
-		private static void SerializeMinMaxSettings()
-		{
-			Settings.Default.TCodeOutputRanges = new JavaScriptSerializer().Serialize(_tCodeOutputRanges);
 		}
 
 		private static void SerializeGamepadMap()
@@ -335,47 +315,25 @@ namespace TCode_Remote.Library.Handler
 			Settings.Default.AvailableAxis = new JavaScriptSerializer().Serialize(_availableAxis);
 		}
 
-		private static void SetupNewRangesDictionary()
-		{
-			_tCodeOutputRanges = new Dictionary<string, int>
-			{
-				{ $"{AxisNames.TcXUpDownL0}Mid", 500 },
-				{ $"{AxisNames.TcXUpDownL0}Max", 999 },
-				{ $"{AxisNames.TcXUpDownL0}Min", 1 },
-				{ $"{AxisNames.TcYRollR1}Mid", 500 },
-				{ $"{AxisNames.TcYRollR1}Max", 999 },
-				{ $"{AxisNames.TcYRollR1}Min", 1 },
-				{ $"{AxisNames.TcXRollR2}Mid", 500 },
-				{ $"{AxisNames.TcXRollR2}Max", 999 },
-				{ $"{AxisNames.TcXRollR2}Min", 1 },
-				{ $"{AxisNames.TcTwistR0}Mid", 500 },
-				{ $"{AxisNames.TcTwistR0}Max", 520 },
-				{ $"{AxisNames.TcTwistR0}Min", 480 },
-				{ $"{AxisNames.TcVibV0}Mid", 500 },
-				{ $"{AxisNames.TcVibV0}Max", 999 },
-				{ $"{AxisNames.TcVibV0}Min", 1 }
-			};
-		}
-
 		private static void SetupAvailableAxis()
 		{
 			_availableAxis = new Dictionary<string, ChannelNameModel>()
 			{
-				{AxisNames.None, new ChannelNameModel() { FriendlyName = AxisNames.None, AxisName = AxisNames.None, Channel = AxisNames.None, Start = 500, End = 999 } },
-				{AxisNames.TcXUpDownL0, new ChannelNameModel() { FriendlyName = "X (Up/down L0)", AxisName = AxisNames.TcXUpDownL0, Channel = "L0", Start = 500, End = 999 } },
-				{AxisNames.TcXDownL0, new ChannelNameModel() { FriendlyName = "X (Down)", AxisName = AxisNames.TcXDownL0, Channel = "L0", Start = 500, End = 999} },
-				{AxisNames.TcXUpL0, new ChannelNameModel() { FriendlyName = "X (Up)", AxisName = AxisNames.TcXUpL0, Channel = "L0", Start = 500, End = 999 } },
-				{AxisNames.TcXRollR2, new ChannelNameModel() { FriendlyName = "X (Roll R2)", AxisName = AxisNames.TcXRollR2, Channel = "R2", Start = 500, End = 999 } },
-				{AxisNames.TcXRollForwardR2, new ChannelNameModel() { FriendlyName = "X (Roll Forward)", AxisName = AxisNames.TcXRollForwardR2, Channel = "R2", Start = 500, End = 999 } },
-				{AxisNames.TcXRollBackR2, new ChannelNameModel() { FriendlyName = "X (Roll Back)", AxisName = AxisNames.TcXRollBackR2, Channel = "R2", Start = 500, End = 999 } },
-				{AxisNames.TcYRollR1, new ChannelNameModel() { FriendlyName = "Y (Roll R1)", AxisName = AxisNames.TcYRollR1, Channel = "R1", Start = 500, End = 999 } },
-				{AxisNames.TcYRollLeftR1, new ChannelNameModel() { FriendlyName = "Y (Roll Left)", AxisName = AxisNames.TcYRollLeftR1, Channel = "R1", Start = 500, End = 999} },
-				{AxisNames.TcYRollRightR1, new ChannelNameModel() { FriendlyName = "Y (Roll Right)", AxisName = AxisNames.TcYRollRightR1, Channel = "R1", Start = 500, End = 999 } },
-				{AxisNames.TcTwistR0, new ChannelNameModel() { FriendlyName = "Twist R0", AxisName = AxisNames.TcTwistR0, Channel = "R0", Start = 500, End = 520 } },
-				{AxisNames.TcTwistCWR0, new ChannelNameModel() { FriendlyName = "Twist (CW)", AxisName = AxisNames.TcTwistCWR0, Channel = "R0", Start = 500, End = 520 } },
-				{AxisNames.TcTwistCCWR0, new ChannelNameModel() { FriendlyName = "Twist (CCW)", AxisName = AxisNames.TcTwistCCWR0, Channel = "R0", Start = 500, End = 520 } },
-				{AxisNames.TcVibV0, new ChannelNameModel() { FriendlyName = "Vib V0", AxisName = AxisNames.TcVibV0, Channel = "V0", Start = 500, End = 999 } },
-				{AxisNames.TcPumpV2, new ChannelNameModel() { FriendlyName = "Pump V2", AxisName = AxisNames.TcPumpV2, Channel = "V2", Start = 500, End = 999 } }
+				{AxisNames.None, new ChannelNameModel() { FriendlyName = AxisNames.None, AxisName = AxisNames.None, Channel = AxisNames.None, Mid = 500, Min = 1, Max = 999 } },
+				{AxisNames.TcXUpDownL0, new ChannelNameModel() { FriendlyName = "X (Up/down L0)", AxisName = AxisNames.TcXUpDownL0, Channel = "L0", Mid = 500, Min = 1, Max = 999 } },
+				{AxisNames.TcXDownL0, new ChannelNameModel() { FriendlyName = "X (Down)", AxisName = AxisNames.TcXDownL0, Channel = "L0", Mid = 500, Min = 1, Max = 999 } },
+				{AxisNames.TcXUpL0, new ChannelNameModel() { FriendlyName = "X (Up)", AxisName = AxisNames.TcXUpL0, Channel = "L0", Mid = 500, Min = 1, Max = 999 } },
+				{AxisNames.TcXRollR2, new ChannelNameModel() { FriendlyName = "X (Roll R2)", AxisName = AxisNames.TcXRollR2, Channel = "R2", Mid = 500, Min = 1, Max = 999 } },
+				{AxisNames.TcXRollForwardR2, new ChannelNameModel() { FriendlyName = "X (Roll Forward)", AxisName = AxisNames.TcXRollForwardR2, Channel = "R2", Mid = 500, Min = 1, Max = 999 } },
+				{AxisNames.TcXRollBackR2, new ChannelNameModel() { FriendlyName = "X (Roll Back)", AxisName = AxisNames.TcXRollBackR2, Channel = "R2", Mid = 500, Min = 1, Max = 999 } },
+				{AxisNames.TcYRollR1, new ChannelNameModel() { FriendlyName = "Y (Roll R1)", AxisName = AxisNames.TcYRollR1, Channel = "R1", Mid = 500, Min = 1, Max = 999 } },
+				{AxisNames.TcYRollLeftR1, new ChannelNameModel() { FriendlyName = "Y (Roll Left)", AxisName = AxisNames.TcYRollLeftR1, Channel = "R1", Mid = 500, Min = 1, Max = 999 } },
+				{AxisNames.TcYRollRightR1, new ChannelNameModel() { FriendlyName = "Y (Roll Right)", AxisName = AxisNames.TcYRollRightR1, Channel = "R1", Mid = 500, Min = 1, Max = 999 } },
+				{AxisNames.TcTwistR0, new ChannelNameModel() { FriendlyName = "Twist R0", AxisName = AxisNames.TcTwistR0, Channel = "R0", Mid = 500, Min = 480, Max = 520 } },
+				{AxisNames.TcTwistCWR0, new ChannelNameModel() { FriendlyName = "Twist (CW)", AxisName = AxisNames.TcTwistCWR0, Channel = "R0", Mid = 500, Min = 480, Max = 520 } },
+				{AxisNames.TcTwistCCWR0, new ChannelNameModel() { FriendlyName = "Twist (CCW)", AxisName = AxisNames.TcTwistCCWR0, Channel = "R0", Mid = 500, Min = 480, Max = 520 } },
+				{AxisNames.TcVibV0, new ChannelNameModel() { FriendlyName = "Vib V0", AxisName = AxisNames.TcVibV0, Channel = "V0", Mid = 500, Min = 1, Max = 999 } },
+				{AxisNames.TcPumpV2, new ChannelNameModel() { FriendlyName = "Pump V2", AxisName = AxisNames.TcPumpV2, Channel = "V2", Mid = 500, Min = 1, Max = 999 } }
 			};
 		}
 
@@ -409,7 +367,6 @@ namespace TCode_Remote.Library.Handler
 		public static void ResetSettings()
 		{
 			Settings.Default.Reset();
-			SetupNewRangesDictionary();
 			SetupAvailableAxis();
 			SetupGamepadButtonMapDictionary();
 			Save();
