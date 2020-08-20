@@ -144,11 +144,11 @@ namespace TCode_Remote.Library.Handler
 							var receivedResults = udpClient.Receive(ref ipEndPoint);
 							var returnData = Encoding.ASCII.GetString(receivedResults);
 							Log.Debug(DateTime.Now + " returnData: " + returnData);
-							if (returnData.Contains("password"))
+							if (returnData.Contains(SettingsHandler.HandShakeChannel))
 							{
 								_udpClient = new UdpClient();
 								_udpClient.Connect(ipEndPoint.Address, 54000);
-								var connected = Encoding.ASCII.GetBytes("connected");
+								var connected = Encoding.ASCII.GetBytes(SettingsHandler.TCodeVersion);
 								_udpClient.Send(connected, connected.Length);
 								UpdateConnected(true);
 								continue;
@@ -194,7 +194,7 @@ namespace TCode_Remote.Library.Handler
 				var receivedResults = await udpClient.ReceiveAsync();
 				var returnData = Encoding.ASCII.GetString(receivedResults.Buffer);
 				Log.Debug(DateTime.Now + " udp connection handshake returnData: " + returnData);
-				if (returnData.Contains("connected"))
+				if (returnData.Contains(SettingsHandler.TCodeVersion))
 				{
 					UpdateConnected(true);
 				}
@@ -211,7 +211,7 @@ namespace TCode_Remote.Library.Handler
 					while (!IsConnected && IsRunning)
 					{
 						_udpClient.Connect(_address, _port);
-						var password = Encoding.ASCII.GetBytes("password");
+						var password = Encoding.ASCII.GetBytes(SettingsHandler.HandShakeChannel);
 						Log.Debug(DateTime.Now + " Sending udp connection handshake");
 						_udpClient.Send(password, password.Length);
 						Thread.Sleep(TimeSpan.FromSeconds(5));

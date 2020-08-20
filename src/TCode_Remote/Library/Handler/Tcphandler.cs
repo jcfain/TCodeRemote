@@ -59,7 +59,7 @@ namespace TCode_Remote.Library.Handler
 				{
 					try
 					{
-						SendToOutputClient("password");
+						SendToOutputClient(SettingsHandler.HandShakeChannel);
 						StartHeartBeat();
 						return;
 					} 
@@ -80,7 +80,7 @@ namespace TCode_Remote.Library.Handler
 					try
 					{
 						Thread.Sleep(TimeSpan.FromSeconds(10));
-						SendToOutputClient("password");
+						SendToOutputClient(SettingsHandler.HandShakeChannel);
 					}
 					catch
 					{
@@ -185,7 +185,7 @@ namespace TCode_Remote.Library.Handler
 					{
 						var returnData = RecieveData();
 
-						if (returnData.Contains("password"))
+						if (returnData.Contains(SettingsHandler.HandShakeChannel))
 						{
 							UpdateConnected(true);
 							continue;
@@ -237,9 +237,9 @@ namespace TCode_Remote.Library.Handler
 
 			// show the data on the console 
 			Log.Debug($"{DateTime.Now} Text Received: {returnData}");
-			if (returnData.Contains("password"))
+			if (returnData.Contains(SettingsHandler.HandShakeChannel))
 			{
-				byte[] msg = Encoding.ASCII.GetBytes("connected");
+				byte[] msg = Encoding.ASCII.GetBytes(SettingsHandler.TCodeVersion);
 
 				socketHandler.Send(msg);
 			}
@@ -276,7 +276,7 @@ namespace TCode_Remote.Library.Handler
 				responseData = Encoding.ASCII.GetString(data, 0, bytes);
 				Log.Debug("Send Reply: " + responseData);
 
-				if (responseData.Contains("connected")) 
+				if (responseData.Contains(SettingsHandler.TCodeVersion)) 
 				{
 					UpdateConnected(true);
 				}

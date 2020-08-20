@@ -228,7 +228,7 @@ namespace TCode_Remote.Library.Handler
 					{
 						Thread.Sleep(1000);
 						Log.Debug("Sending D1 to " + _portName);
-						_port.Write("D1\n");
+						_port.Write(SettingsHandler.HandShakeChannel + "\n");
 						Thread.Sleep(5000);
 					} 
 					catch (Exception e)

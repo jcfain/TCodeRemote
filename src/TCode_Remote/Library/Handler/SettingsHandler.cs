@@ -17,6 +17,23 @@ namespace TCode_Remote.Library.Handler
 		public const string DEVICE_CONNECT = "Searching";
 		public static event EventHandler PropertyChanged;
 
+
+		private static string _tCodeVersion;
+		public static string TCodeVersion
+		{
+			get { return _tCodeVersion; }
+			set
+			{
+				_tCodeVersion = value;
+				PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(TCodeVersion)));
+			}
+		}
+
+		public static string HandShakeChannel
+		{
+			get { return "D1"; }
+		}
+
 		private static bool _isDebugMode;
 		public static bool IsDebugMode
 		{
@@ -217,18 +234,6 @@ namespace TCode_Remote.Library.Handler
 				PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(AvailableAxis)));
 			}
 		}
-
-		private static string _tCodeVersion;
-		public static string TCodeVersion
-		{
-			get { return _tCodeVersion; }
-			set
-			{
-				_tCodeVersion = value;
-				PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(TCodeVersion)));
-			}
-		}
-
 
 		private static bool _showBLEMessage;
 		public static bool ShowBLEMessage
