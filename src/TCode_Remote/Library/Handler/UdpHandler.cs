@@ -182,22 +182,7 @@ namespace TCode_Remote.Library.Handler
 		{
 			if (!IsRunning)
 			{
-				SendClientHandshake();
-				await ReceiveServerHandshake();
-			}
-		}
-
-		private async Task ReceiveServerHandshake()
-		{
-			using (var udpClient = new UdpClient(54000))
-			{
-				var receivedResults = await udpClient.ReceiveAsync();
-				var returnData = Encoding.ASCII.GetString(receivedResults.Buffer);
-				Log.Debug(DateTime.Now + " udp connection handshake returnData: " + returnData);
-				if (returnData.Contains(SettingsHandler.TCodeVersion))
-				{
-					UpdateConnected(true);
-				}
+				await SendClientHandshake();
 			}
 		}
 
@@ -206,7 +191,7 @@ namespace TCode_Remote.Library.Handler
 			if (_udpClient != null)
 			{
 				_isRunning = true;
-				await Task.Run(() =>
+				await Task.Run(async () =>
 				{
 					while (!IsConnected && IsRunning)
 					{
@@ -214,7 +199,13 @@ namespace TCode_Remote.Library.Handler
 						var password = Encoding.ASCII.GetBytes(SettingsHandler.HandShakeChannel);
 						Log.Debug(DateTime.Now + " Sending udp connection handshake");
 						_udpClient.Send(password, password.Length);
-						Thread.Sleep(TimeSpan.FromSeconds(5));
+						var receivedResults = await _udpClient.ReceiveAsync();
+						var returnData = Encoding.ASCII.GetString(receivedResults.Buffer);
+						Log.Debug(DateTime.Now + " udp connection handshake returnData: " + returnData);
+						if (returnData.Contains(SettingsHandler.TCodeVersion))
+						{
+							UpdateConnected(true);
+						}
 					}
 				});
 			}

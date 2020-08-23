@@ -31,7 +31,7 @@ namespace TCode_Remote.Library.Handler
 
 		public static string HandShakeChannel
 		{
-			get { return "D1"; }
+			get { return "D1\n"; }
 		}
 
 		private static bool _isDebugMode;
