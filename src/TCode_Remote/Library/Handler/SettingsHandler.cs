@@ -248,7 +248,7 @@ namespace TCode_Remote.Library.Handler
 		}
 
 
-		private static bool _dataResetRequired = true;
+		private static bool _dataResetRequired = false;
 
 		static SettingsHandler()
 		{
