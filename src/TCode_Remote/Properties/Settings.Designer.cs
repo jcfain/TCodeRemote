@@ -218,12 +218,12 @@ namespace TCode_Remote.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool UseUDP {
+        public bool UseUDPOutput {
             get {
-                return ((bool)(this["UseUDP"]));
+                return ((bool)(this["UseUDPOutput"]));
             }
             set {
-                this["UseUDP"] = value;
+                this["UseUDPOutput"] = value;
             }
         }
         
@@ -260,6 +260,18 @@ namespace TCode_Remote.Properties {
             }
             set {
                 this["ShowBLEMessage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseUDPInput {
+            get {
+                return ((bool)(this["UseUDPInput"]));
+            }
+            set {
+                this["UseUDPInput"] = value;
             }
         }
     }

@@ -197,6 +197,8 @@ namespace TCode_Remote
 					break;
 			}
 
+			UDPOutputCheckbox.IsChecked = SettingsHandler.UseUDPOutput;
+			UDPInputCheckbox.IsChecked = SettingsHandler.UseUDPInput;
 			//if (OutputSerialRdo.IsChecked.Value && InputGamepadRdo.IsChecked.Value ||
 			//	BLERdo.IsChecked.Value && InputGamepadRdo.IsChecked.Value ||
 			//	InputAddressRdo.IsChecked.Value && OutputSerialRdo.IsChecked.Value)
@@ -243,7 +245,7 @@ namespace TCode_Remote
 			{
 				SettingsHandler.InputDevice = OSRRemoteInputMode.Address;
 				GamepadMap.Visibility = Visibility.Hidden;
-				if (SettingsHandler.UseUDP)
+				if (SettingsHandler.UseUDPInput)
 				{
 					_inputDevice = InputUdpAddresshandler;
 				}
@@ -299,7 +301,7 @@ namespace TCode_Remote
 			if (radioButton == OutputAddressRdo)
 			{
 				SettingsHandler.OutputDevice = OSRRemoteOutputMode.Address;
-				if (SettingsHandler.UseUDP)
+				if (SettingsHandler.UseUDPOutput)
 				{
 					_outputDevice = OutputUdpAddresshandler;
 				}
@@ -399,7 +401,7 @@ namespace TCode_Remote
 				!string.IsNullOrEmpty(OutputAddressTxt.Text) && 
 				!string.IsNullOrEmpty(OutputNetworkPortTxt.Text))
 			{
-				if (SettingsHandler.UseUDP)
+				if (SettingsHandler.UseUDPOutput)
 				{
 					OutputUdpAddresshandler.Init(new NetworkInitModel() { Address = OutputAddressTxt.Text, Port = int.Parse(OutputNetworkPortTxt.Text), Mode = OSRRemoteDeviceMode.Out });
 				}
@@ -418,7 +420,7 @@ namespace TCode_Remote
 				!string.IsNullOrEmpty(InputNetworkPortTxt.Text))
 			{
 				var port = int.Parse(InputNetworkPortTxt.Text);
-				if (SettingsHandler.UseUDP)
+				if (SettingsHandler.UseUDPOutput)
 				{
 					InputUdpAddresshandler.Init(new NetworkInitModel() { Port = port, Mode = OSRRemoteDeviceMode.In });
 				}
@@ -766,6 +768,33 @@ namespace TCode_Remote
 				await BLEDeviceHandler.ConnectDevice(bleDevice.Id);
 			}
 		}
+
+		private void UseUDPInput_Clicked(object sender, RoutedEventArgs e)
+		{
+			Log.Dialog("Input Protocol changed", "Please restart the app.\nMake sure the other end has the same value.");
+			if (SettingsHandler.UseUDPInput)
+			{
+				_inputDevice = InputUdpAddresshandler;
+			}
+			else
+			{
+				_inputDevice = InputTcpAddresshandler;
+			}
+		}
+
+		private void UseUDPOutput_Clicked(object sender, RoutedEventArgs e)
+		{
+			//Log.Dialog("Output Protocol changed", "Please restart the app.\nMake sure the other end has the same value.");
+			if (SettingsHandler.UseUDPOutput)
+			{
+				_outputDevice = OutputUdpAddresshandler;
+			}
+			else
+			{
+				_outputDevice = OutputTcpAddresshandler;
+			}
+		}
+
 
 		private void InvertXCheckbox_Checked(object sender, RoutedEventArgs e)
 		{

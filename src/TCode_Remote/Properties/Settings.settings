@@ -50,7 +50,7 @@
     <Setting Name="AvailableAxis" Type="System.String" Scope="User">
       <Value Profile="(Default)">{}</Value>
     </Setting>
-    <Setting Name="UseUDP" Type="System.Boolean" Scope="User">
+    <Setting Name="UseUDPOutput" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Version" Type="System.Double" Scope="User">
@@ -60,6 +60,9 @@
       <Value Profile="(Default)">TCode</Value>
     </Setting>
     <Setting Name="ShowBLEMessage" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="UseUDPInput" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>

@@ -219,15 +219,27 @@ namespace TCode_Remote.Library.Handler
 			}
 		}
 
-		private static bool _useUDP;
-		public static bool UseUDP
+		private static bool _useUDPOutput;
+		public static bool UseUDPOutput
 		{
-			get { return _useUDP; }
+			get { return _useUDPOutput; }
 			set
 			{
-				Settings.Default.UseUDP = value;
-				_useUDP = value;
-				PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(UseUDP)));
+				Settings.Default.UseUDPOutput = value;
+				_useUDPOutput = value;
+				PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(UseUDPOutput)));
+			}
+		}
+
+		private static bool _useUDPInput;
+		public static bool UseUDPInput
+		{
+			get { return _useUDPInput; }
+			set
+			{
+				Settings.Default.UseUDPInput = value;
+				_useUDPInput = value;
+				PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(UseUDPInput)));
 			}
 		}
 
@@ -295,7 +307,8 @@ namespace TCode_Remote.Library.Handler
 				_inverseTcXL0 = Settings.Default.InverseTcXL0;
 				_inverseTcYRollR1 = Settings.Default.InverseTcYRollR1;
 				_speed = Settings.Default.Speed;
-				_useUDP = Settings.Default.UseUDP;
+				_useUDPOutput = Settings.Default.UseUDPOutput;
+				_useUDPInput = Settings.Default.UseUDPInput;
 				_tCodeVersion = Settings.Default.TCodeVersion;
 				_inputDevice = string.IsNullOrEmpty(Settings.Default.InputDevice) ? OSRRemoteInputMode.Gamepad :
 					(OSRRemoteInputMode)Enum.Parse(typeof(OSRRemoteInputMode), Settings.Default.InputDevice);

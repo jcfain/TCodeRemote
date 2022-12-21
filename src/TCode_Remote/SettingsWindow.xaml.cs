@@ -34,17 +34,11 @@ namespace TCode_Remote
 			InitializeComponent();
 			DataContext = this;
 			ChannelData = new ObservablePairCollection<string, ChannelNameModel>(SettingsHandler.AvailableAxis);
-			UseUDP.IsChecked = SettingsHandler.UseUDP;
 		}
 
 		void OnPropertyChanged(string prop)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-		}
-
-		private void UseUDP_Clicked(object sender, RoutedEventArgs e)
-		{
-			Log.Dialog("Protocol changed", "Please restart the app.\nMake sure the other end has the same value.");
 		}
 
 		private void ResetSettingsBtn_Click(object sender, RoutedEventArgs e)

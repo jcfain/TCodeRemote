@@ -9,8 +9,7 @@
         Title="Settings" Height="450" Width="800" ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner">
     <Grid Background="#FF33363C">
-        <CheckBox x:Name="UseUDP" Content="Use UDP for network stream" HorizontalAlignment="Left" Margin="468,61,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.19,-1.356" Click="UseUDP_Clicked" IsChecked="{Binding Path=(localHandler:SettingsHandler.UseUDP), UpdateSourceTrigger=PropertyChanged}" Foreground="White"/>
-        <Button x:Name="ResetSettingsBtn" Content="Reset ALL Settings" HorizontalAlignment="Left" Margin="468,81,0,0" VerticalAlignment="Top" Width="112" Click="ResetSettingsBtn_Click" Height="24" Background="White" Foreground="Black"/>
+        <Button x:Name="ResetSettingsBtn" Content="Reset ALL Settings" HorizontalAlignment="Left" Margin="468,61,0,0" VerticalAlignment="Top" Width="112" Click="ResetSettingsBtn_Click" Height="24" Background="White" Foreground="Black"/>
         <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="689,370,0,0" VerticalAlignment="Top" Width="75" Height="24" RenderTransformOrigin="0.512,0.453" Click="SaveButton_Click" Background="White" Foreground="Black"/>
         <DataGrid x:Name="ChannelGrid" HorizontalAlignment="Left" Height="324" Margin="10,41,0,0" VerticalAlignment="Top" Width="439" ItemsSource="{Binding ChannelData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" Foreground="Black" BorderBrush="#FF686868" Background="White" >
             <DataGrid.Columns>
