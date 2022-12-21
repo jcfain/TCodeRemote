@@ -108,7 +108,7 @@ namespace TCode_Remote.Library.Handler
 			{
 				try
 				{
-					var serializedstring = new JavaScriptSerializer().Serialize(e.GamepadData);
+					var serializedstring = _serializer.Serialize(e.GamepadData);
 					Log.Debug("Trying to send: " + serializedstring);
 					if (IsRunning)
 						SendToOutputClient(serializedstring);

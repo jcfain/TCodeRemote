@@ -113,7 +113,7 @@ namespace TCode_Remote.Library.Handler
 			{
 				try
 				{
-					var serializedstring = new JavaScriptSerializer().Serialize(e.GamepadData);
+					var serializedstring = _serializer.Serialize(e.GamepadData);
 					Log.Debug("sentData: " + serializedstring);
 					Byte[] senddata = Encoding.ASCII.GetBytes(serializedstring);
 					if(IsRunning)
@@ -195,16 +195,23 @@ namespace TCode_Remote.Library.Handler
 				{
 					while (!IsConnected && IsRunning)
 					{
-						_udpClient.Connect(_address, _port);
-						var password = Encoding.ASCII.GetBytes(SettingsHandler.HandShakeChannel);
-						Log.Debug(DateTime.Now + " Sending udp connection handshake");
-						_udpClient.Send(password, password.Length);
-						var receivedResults = await _udpClient.ReceiveAsync();
-						var returnData = Encoding.ASCII.GetString(receivedResults.Buffer);
-						Log.Debug(DateTime.Now + " udp connection handshake returnData: " + returnData);
-						if (returnData.Contains(SettingsHandler.TCodeVersion))
+						try
 						{
-							UpdateConnected(true);
+							_udpClient.Connect(_address, _port);
+							var password = Encoding.ASCII.GetBytes(SettingsHandler.HandShakeChannel);
+							Log.Debug(DateTime.Now + " Sending udp connection handshake");
+							_udpClient.Send(password, password.Length);
+							var receivedResults = await _udpClient.ReceiveAsync();
+							var returnData = Encoding.ASCII.GetString(receivedResults.Buffer);
+							Log.Debug(DateTime.Now + " udp connection handshake returnData: " + returnData);
+							if (returnData.Contains(SettingsHandler.TCodeVersion))
+							{
+								UpdateConnected(true);
+							}
+						} 
+						catch(Exception e)
+						{
+							Log.Warning($"Cannot connect to {_address}. {e.Message}");
 						}
 					}
 				});

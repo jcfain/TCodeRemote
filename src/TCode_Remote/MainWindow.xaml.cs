@@ -108,27 +108,54 @@ namespace TCode_Remote
 
 		private void RestoreSavedSettings()
 		{
-			XRangeSlider.Value = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcXUpDownL0).Mid;
-			XRangeSlider.SelectionStart = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcXUpDownL0).Min;
-			XRangeSlider.SelectionEnd = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcXUpDownL0).Max;
+			XRangeSlider.Value = SettingsHandler.AvailableAxis.GetValue(AxisNames.Stroke).Mid;
+			XRangeSlider.SelectionStart = SettingsHandler.AvailableAxis.GetValue(AxisNames.Stroke).Min;
+			XRangeSlider.SelectionEnd = SettingsHandler.AvailableAxis.GetValue(AxisNames.Stroke).Max;
 			LoadSliderUI(true, XRangeSlider, XRangeMin, XRangeMax);
 			LoadSliderUI(false, XRangeSlider, XRangeMin, XRangeMax);
 			XRangeMinLabel.Content = XRangeSlider.SelectionStart;
 			XRangeMaxLabel.Content = XRangeSlider.SelectionEnd;
-			YRollRangeSlider.Value = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcYRollR1).Mid;
-			YRollRangeSlider.SelectionStart = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcYRollR1).Min;
-			YRollRangeSlider.SelectionEnd = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcYRollR1).Max;
+
+			YRollRangeSlider.Value = SettingsHandler.AvailableAxis.GetValue(AxisNames.Roll).Mid;
+			YRollRangeSlider.SelectionStart = SettingsHandler.AvailableAxis.GetValue(AxisNames.Roll).Min;
+			YRollRangeSlider.SelectionEnd = SettingsHandler.AvailableAxis.GetValue(AxisNames.Roll).Max;
 			LoadSliderUI(true, YRollRangeSlider, YRollRangeMin, YRollRangeMax);
 			LoadSliderUI(false, YRollRangeSlider, YRollRangeMin, YRollRangeMax);
 			YRollRangeMinLabel.Content = YRollRangeSlider.SelectionStart;
 			YRollRangeMaxLabel.Content = YRollRangeSlider.SelectionEnd;
-			XRollRangeSlider.Value = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcXRollR2).Mid;
-			XRollRangeSlider.SelectionStart = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcXRollR2).Min;
-			XRollRangeSlider.SelectionEnd = SettingsHandler.AvailableAxis.GetValue(AxisNames.TcXRollR2).Max;
+
+			XRollRangeSlider.Value = SettingsHandler.AvailableAxis.GetValue(AxisNames.Pitch).Mid;
+			XRollRangeSlider.SelectionStart = SettingsHandler.AvailableAxis.GetValue(AxisNames.Pitch).Min;
+			XRollRangeSlider.SelectionEnd = SettingsHandler.AvailableAxis.GetValue(AxisNames.Pitch).Max;
 			LoadSliderUI(true, XRollRangeSlider, XRollRangeMin, XRollRangeMax);
 			LoadSliderUI(false, XRollRangeSlider, XRollRangeMin, XRollRangeMax);
 			XRollRangeMinLabel.Content = XRollRangeSlider.SelectionStart;
 			XRollRangeMaxLabel.Content = XRollRangeSlider.SelectionEnd;
+
+			SwayRangeSlider.Value = SettingsHandler.AvailableAxis.GetValue(AxisNames.Sway).Mid;
+			SwayRangeSlider.SelectionStart = SettingsHandler.AvailableAxis.GetValue(AxisNames.Sway).Min;
+			SwayRangeSlider.SelectionEnd = SettingsHandler.AvailableAxis.GetValue(AxisNames.Sway).Max;
+			LoadSliderUI(true, SwayRangeSlider, SwayRangeMin, SwayRangeMax);
+			LoadSliderUI(false, SwayRangeSlider, SwayRangeMin, SwayRangeMax);
+			SwayRangeMinLabel.Content = SwayRangeSlider.SelectionStart;
+			SwayRangeMaxLabel.Content = SwayRangeSlider.SelectionEnd;
+
+			SurgeRangeSlider.Value = SettingsHandler.AvailableAxis.GetValue(AxisNames.Surge).Mid;
+			SurgeRangeSlider.SelectionStart = SettingsHandler.AvailableAxis.GetValue(AxisNames.Surge).Min;
+			SurgeRangeSlider.SelectionEnd = SettingsHandler.AvailableAxis.GetValue(AxisNames.Surge).Max;
+			LoadSliderUI(true, SurgeRangeSlider, SurgeRangeMin, SurgeRangeMax);
+			LoadSliderUI(false, SurgeRangeSlider, SurgeRangeMin, SurgeRangeMax);
+			SurgeRangeMinLabel.Content = SurgeRangeSlider.SelectionStart;
+			SurgeRangeMaxLabel.Content = SurgeRangeSlider.SelectionEnd;
+
+			TwistRangeSlider.Value = SettingsHandler.AvailableAxis.GetValue(AxisNames.Twist).Mid;
+			TwistRangeSlider.SelectionStart = SettingsHandler.AvailableAxis.GetValue(AxisNames.Twist).Min;
+			TwistRangeSlider.SelectionEnd = SettingsHandler.AvailableAxis.GetValue(AxisNames.Twist).Max;
+			LoadSliderUI(true, TwistRangeSlider, TwistRangeMin, TwistRangeMax);
+			LoadSliderUI(false, TwistRangeSlider, TwistRangeMin, TwistRangeMax);
+			TwistRangeMinLabel.Content = TwistRangeSlider.SelectionStart;
+			TwistRangeMaxLabel.Content = TwistRangeSlider.SelectionEnd;
+
 			SpeedValueLabel.Content = SpeedSlider.Value;
 			SetLabelConnected(InputNetworkStatusLabel, false, null);
 			SetLabelConnected(OutputNetworkStatusLabel, false, null);
@@ -144,7 +171,7 @@ namespace TCode_Remote
 			//OutPutSerialCmb.SelectedItem = SettingsHandler.OutputSerialPort;
 			//InputSerialCmb.SelectedItem = SettingsHandler.InputSerialPort;
 
-			SerialOSRSettingsGrid.Visibility = Visibility.Hidden;
+			//SerialOSRSettingsGrid.Visibility = Visibility.Hidden;
 			switch (SettingsHandler.InputDevice)
 			{
 				case OSRRemoteInputMode.Address:
@@ -170,11 +197,16 @@ namespace TCode_Remote
 					break;
 			}
 
-			if (OutputSerialRdo.IsChecked.Value && InputGamepadRdo.IsChecked.Value ||
-				BLERdo.IsChecked.Value && InputGamepadRdo.IsChecked.Value ||
-				InputAddressRdo.IsChecked.Value && OutputSerialRdo.IsChecked.Value)
+			//if (OutputSerialRdo.IsChecked.Value && InputGamepadRdo.IsChecked.Value ||
+			//	BLERdo.IsChecked.Value && InputGamepadRdo.IsChecked.Value ||
+			//	InputAddressRdo.IsChecked.Value && OutputSerialRdo.IsChecked.Value)
+			//{
+			//	SerialOSRSettingsGrid.Visibility = Visibility.Visible;
+			//}
+
+			if (InputSerialRdo.IsChecked.Value)
 			{
-				SerialOSRSettingsGrid.Visibility = Visibility.Visible;
+				SerialOSRSettingsGrid.Visibility = Visibility.Hidden;
 			}
 		}
 
@@ -204,7 +236,8 @@ namespace TCode_Remote
 			}
 			StartBtn.IsEnabled = true;
 			var radioButton = (RadioButton)sender;
-			SerialOSRSettingsGrid.Visibility = Visibility.Hidden;
+			//SerialOSRSettingsGrid.Visibility = Visibility.Hidden;
+			SerialOSRSettingsGrid.Visibility = Visibility.Visible;
 
 			if (radioButton == InputAddressRdo)
 			{
@@ -234,6 +267,7 @@ namespace TCode_Remote
 			{
 				SettingsHandler.InputDevice = OSRRemoteInputMode.Serial;
 				GamepadMap.Visibility = Visibility.Hidden;
+				SerialOSRSettingsGrid.Visibility = Visibility.Hidden;
 				_inputDevice = InputSerialDeviceHandler;
 				var selectedValue = InputSerialCmb.SelectedValue as string;
 				if (!string.IsNullOrEmpty(selectedValue) && !InputSerialDeviceHandler.IsRunning)
@@ -242,10 +276,10 @@ namespace TCode_Remote
 				}
 			}
 
-			if (OutputSerialRdo.IsChecked.Value || BLERdo.IsChecked.Value)
-			{
-				SerialOSRSettingsGrid.Visibility = Visibility.Visible;
-			}
+			//if (OutputSerialRdo.IsChecked.Value || BLERdo.IsChecked.Value)
+			//{
+			//	SerialOSRSettingsGrid.Visibility = Visibility.Visible;
+			//}
 			if (_outputDevice != null)
 			{
 				StartBtn.IsEnabled = _inputDevice.IsConnected && _outputDevice.IsConnected;
@@ -259,7 +293,8 @@ namespace TCode_Remote
 				_outputDevice.Dispose();
 			}
 			var radioButton = (RadioButton)sender;
-			SerialOSRSettingsGrid.Visibility = Visibility.Hidden;
+			//SerialOSRSettingsGrid.Visibility = Visibility.Hidden;
+			SerialOSRSettingsGrid.Visibility = Visibility.Visible;
 
 			if (radioButton == OutputAddressRdo)
 			{
@@ -277,7 +312,7 @@ namespace TCode_Remote
 			else if (radioButton == OutputSerialRdo)
 			{
 				SettingsHandler.OutputDevice = OSRRemoteOutputMode.Serial;
-				SerialOSRSettingsGrid.Visibility = Visibility.Visible;
+				//SerialOSRSettingsGrid.Visibility = Visibility.Visible;
 				_outputDevice = OutputSerialDeviceHandler;
 				var selectedValue = OutPutSerialCmb.SelectedValue as string;
 				if (!string.IsNullOrEmpty(selectedValue) && !OutputSerialDeviceHandler.IsRunning)
@@ -292,7 +327,7 @@ namespace TCode_Remote
 				{
 					BLEDeviceHandler.Init(null);
 				}
-				SerialOSRSettingsGrid.Visibility = Visibility.Visible;
+				//SerialOSRSettingsGrid.Visibility = Visibility.Visible;
 				_outputDevice = BLEDeviceHandler;
 				if (SettingsHandler.ShowBLEMessage)
 				{
@@ -512,59 +547,99 @@ namespace TCode_Remote
 			}
 			if (slider == XRangeSlider)
 			{
-				SettingsHandler.AvailableAxis[AxisNames.TcXUpDownL0].Mid = (int)slider.Value;
+				SettingsHandler.AvailableAxis[AxisNames.Stroke].Mid = (int)slider.Value;
 			} 
 			else if (slider == YRollRangeSlider)
 			{
-				SettingsHandler.AvailableAxis[AxisNames.TcYRollR1].Mid = (int)slider.Value;
+				SettingsHandler.AvailableAxis[AxisNames.Roll].Mid = (int)slider.Value;
 			}
 			else if (slider == XRollRangeSlider)
 			{
-				SettingsHandler.AvailableAxis[AxisNames.TcXRollR2].Mid = (int)slider.Value;
+				SettingsHandler.AvailableAxis[AxisNames.Pitch].Mid = (int)slider.Value;
 			}
 		}
 
 		private void XRangeMin_DragDelta(object sender, DragDeltaEventArgs e)
 		{
 			UpdateRangeSliderUI(true, XRangeSlider, XRangeMin, XRangeMax, e.HorizontalChange);
-			SettingsHandler.AvailableAxis[AxisNames.TcXUpDownL0].Min = (int)XRangeSlider.SelectionStart;
+			SettingsHandler.AvailableAxis[AxisNames.Stroke].Min = (int)XRangeSlider.SelectionStart;
 			XRangeMinLabel.Content = (int)XRangeSlider.SelectionStart;
 		}
 
 		private void XRangeMax_DragDelta(object sender, DragDeltaEventArgs e)
 		{
 			UpdateRangeSliderUI(false, XRangeSlider, XRangeMin, XRangeMax, e.HorizontalChange);
-			SettingsHandler.AvailableAxis[AxisNames.TcXUpDownL0].Max = (int)XRangeSlider.SelectionEnd;
+			SettingsHandler.AvailableAxis[AxisNames.Stroke].Max = (int)XRangeSlider.SelectionEnd;
 			XRangeMaxLabel.Content = (int)XRangeSlider.SelectionEnd;
 		}
 
 		private void YRollRangeMin_DragDelta(object sender, DragDeltaEventArgs e)
 		{
 			UpdateRangeSliderUI(true, YRollRangeSlider, YRollRangeMin, YRollRangeMax, e.HorizontalChange);
-			SettingsHandler.AvailableAxis[AxisNames.TcYRollR1].Min = (int)YRollRangeSlider.SelectionStart;
+			SettingsHandler.AvailableAxis[AxisNames.Roll].Min = (int)YRollRangeSlider.SelectionStart;
 			YRollRangeMinLabel.Content = (int)YRollRangeSlider.SelectionStart;
 		}
 
 		private void YRollRangeMax_DragDelta(object sender, DragDeltaEventArgs e)
 		{
 			UpdateRangeSliderUI(false, YRollRangeSlider, YRollRangeMin, YRollRangeMax, e.HorizontalChange);
-			SettingsHandler.AvailableAxis[AxisNames.TcYRollR1].Max = (int)YRollRangeSlider.SelectionEnd;
+			SettingsHandler.AvailableAxis[AxisNames.Roll].Max = (int)YRollRangeSlider.SelectionEnd;
 			YRollRangeMaxLabel.Content = (int)YRollRangeSlider.SelectionEnd;
 		}
 
 		private void XRollRangeMin_DragDelta(object sender, DragDeltaEventArgs e)
 		{
 			UpdateRangeSliderUI(true, XRollRangeSlider, XRollRangeMin, XRollRangeMax, e.HorizontalChange);
-			SettingsHandler.AvailableAxis[AxisNames.TcXRollR2].Min = (int)XRollRangeSlider.SelectionStart;
+			SettingsHandler.AvailableAxis[AxisNames.Pitch].Min = (int)XRollRangeSlider.SelectionStart;
 			XRollRangeMinLabel.Content = (int)XRollRangeSlider.SelectionStart;
 		}
 
 		private void XRollRangeMax_DragDelta(object sender, DragDeltaEventArgs e)
 		{
 			UpdateRangeSliderUI(false, XRollRangeSlider, XRollRangeMin, XRollRangeMax, e.HorizontalChange);
-			SettingsHandler.AvailableAxis[AxisNames.TcXRollR2].Max = (int)XRollRangeSlider.SelectionEnd;
+			SettingsHandler.AvailableAxis[AxisNames.Pitch].Max = (int)XRollRangeSlider.SelectionEnd;
 			XRollRangeMaxLabel.Content = (int)XRollRangeSlider.SelectionEnd;
 		}
+
+		private void SwayRangeMin_DragDelta(object sender, DragDeltaEventArgs e)
+		{
+			UpdateRangeSliderUI(true, SwayRangeSlider, SwayRangeMin, SwayRangeMax, e.HorizontalChange);
+			SettingsHandler.AvailableAxis[AxisNames.Sway].Min = (int)SwayRangeSlider.SelectionStart;
+			SwayRangeMinLabel.Content = (int)SwayRangeSlider.SelectionStart;
+		}
+		private void SwayRangeMax_DragDelta(object sender, DragDeltaEventArgs e)
+		{
+			UpdateRangeSliderUI(false, SwayRangeSlider, SwayRangeMin, SwayRangeMax, e.HorizontalChange);
+			SettingsHandler.AvailableAxis[AxisNames.Sway].Max = (int)SwayRangeSlider.SelectionEnd;
+			SwayRangeMaxLabel.Content = (int)SwayRangeSlider.SelectionEnd;
+		}
+
+		private void SurgeRangeMin_DragDelta(object sender, DragDeltaEventArgs e)
+		{
+			UpdateRangeSliderUI(true, SurgeRangeSlider, SurgeRangeMin, SurgeRangeMax, e.HorizontalChange);
+			SettingsHandler.AvailableAxis[AxisNames.Surge].Min = (int)SurgeRangeSlider.SelectionStart;
+			SurgeRangeMinLabel.Content = (int)SurgeRangeSlider.SelectionStart;
+		}
+		private void SurgeRangeMax_DragDelta(object sender, DragDeltaEventArgs e)
+		{
+			UpdateRangeSliderUI(false, SurgeRangeSlider, SurgeRangeMin, SurgeRangeMax, e.HorizontalChange);
+			SettingsHandler.AvailableAxis[AxisNames.Surge].Max = (int)SurgeRangeSlider.SelectionEnd;
+			SurgeRangeMaxLabel.Content = (int)SurgeRangeSlider.SelectionEnd;
+		}
+
+		private void TwistRangeMin_DragDelta(object sender, DragDeltaEventArgs e)
+		{
+			UpdateRangeSliderUI(true, TwistRangeSlider, TwistRangeMin, TwistRangeMax, e.HorizontalChange);
+			SettingsHandler.AvailableAxis[AxisNames.Twist].Min = (int)TwistRangeSlider.SelectionStart;
+			TwistRangeMinLabel.Content = (int)TwistRangeSlider.SelectionStart;
+		}
+		private void TwistRangeMax_DragDelta(object sender, DragDeltaEventArgs e)
+		{
+			UpdateRangeSliderUI(false, TwistRangeSlider, TwistRangeMin, TwistRangeMax, e.HorizontalChange);
+			SettingsHandler.AvailableAxis[AxisNames.Twist].Max = (int)TwistRangeSlider.SelectionEnd;
+			TwistRangeMaxLabel.Content = (int)TwistRangeSlider.SelectionEnd;
+		}
+
 
 		private void UpdateRangeSliderUI(bool minMode, Slider slider, Thumb min, Thumb max, double horizontalChange)
 		{
@@ -690,6 +765,16 @@ namespace TCode_Remote
 				var bleDevice = (DeviceModel)BLECmb.SelectedItem;
 				await BLEDeviceHandler.ConnectDevice(bleDevice.Id);
 			}
+		}
+
+		private void InvertXCheckbox_Checked(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void MenuItem_Click(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }

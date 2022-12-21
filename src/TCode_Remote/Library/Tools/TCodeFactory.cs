@@ -34,9 +34,9 @@ namespace TCode_Remote.Library.Tools
 				if (_addedAxis.GetValue(tcodeAxis.Channel) == 0 && value != 0)
 				{
 					_addedAxis.Remove(tcodeAxis.Channel);
-					axisValues.RemoveWhere(x => x.Channel.Equals(tcodeAxis.Channel));
+					axisValues.RemoveWhere(x => x.c.Equals(tcodeAxis.Channel));
 				}
-				if (!axisValues.Any(x => x.Channel == tcodeAxis.Channel))
+				if (!axisValues.Any(x => x.c == tcodeAxis.Channel))
 				{
 					double calculatedValue = value;
 					if (isNegative && value > 0)
@@ -44,16 +44,18 @@ namespace TCode_Remote.Library.Tools
 						calculatedValue = -(value);
 					}
 					if (value != 0 && 
-						(((tcodeAxis.AxisName == AxisNames.TcXUpDownL0 || tcodeAxis.AxisName == AxisNames.TcXUpL0 || tcodeAxis.AxisName == AxisNames.TcXDownL0) && SettingsHandler.InverseTcXL0) ||
-						((tcodeAxis.AxisName == AxisNames.TcXRollR2 || tcodeAxis.AxisName == AxisNames.TcXRollForwardR2 || tcodeAxis.AxisName == AxisNames.TcXRollBackR2) && SettingsHandler.InverseTcXRollR2) ||
-						((tcodeAxis.AxisName == AxisNames.TcYRollR1 || tcodeAxis.AxisName == AxisNames.TcYRollLeftR1 || tcodeAxis.AxisName == AxisNames.TcYRollRightR1) && SettingsHandler.InverseTcYRollR1)))
+						(((tcodeAxis.AxisName == AxisNames.Stroke || tcodeAxis.AxisName == AxisNames.StrokeUp || tcodeAxis.AxisName == AxisNames.StrokeDown) && SettingsHandler.InverseTcXL0) ||
+						((tcodeAxis.AxisName == AxisNames.Pitch || tcodeAxis.AxisName == AxisNames.PitchForward || tcodeAxis.AxisName == AxisNames.PitchBack) && SettingsHandler.InverseTcXRollR2) ||
+						((tcodeAxis.AxisName == AxisNames.Roll || tcodeAxis.AxisName == AxisNames.RollLeft || tcodeAxis.AxisName == AxisNames.RollRight) && SettingsHandler.InverseTcYRollR1)))
 					{
 						calculatedValue = -(value);
 					}
 					axisValues.Add(new ChannelValueModel()
 					{
-						Value = CalculateTcodeRange(calculatedValue, tcodeAxis.Channel),
-						Channel = tcodeAxis.Channel
+						v = CalculateTcodeRange(calculatedValue, tcodeAxis.Channel),
+						c = tcodeAxis.Channel,
+						s = SettingsHandler.Speed,
+						i = 0
 					});
 					_addedAxis.Add(tcodeAxis.Channel, value);
 				}
@@ -71,10 +73,10 @@ namespace TCode_Remote.Library.Tools
 			var tCode = new StringBuilder();
 			foreach (var value in values)
 			{
-				var minValue = SettingsHandler.AvailableAxis.GetValue(value.Channel).Min;
-				var maxValue = SettingsHandler.AvailableAxis.GetValue(value.Channel).Max;
-				var clampedValue = maxValue == 0 ? value.Value : MathExtension.Clamp(value.Value, minValue, maxValue);
-				tCode.Append($"{value.Channel}{(clampedValue < 10 ? "0" : "")}{clampedValue}S{SettingsHandler.Speed} ");
+				var minValue = SettingsHandler.AvailableAxis.GetValue(value.c).Min;
+				var maxValue = SettingsHandler.AvailableAxis.GetValue(value.c).Max;
+				var clampedValue = maxValue == 0 ? value.v : MathExtension.Clamp(value.v, minValue, maxValue);
+				tCode.Append($"{value.c}{(clampedValue < 10 ? "0" : "")}{clampedValue}S{SettingsHandler.Speed} ");
 			}
 			return $"{tCode.ToString().Trim()}\n";
 		}

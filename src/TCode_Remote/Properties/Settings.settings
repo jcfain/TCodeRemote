@@ -9,7 +9,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OutputAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">tcode.local</Value>
     </Setting>
     <Setting Name="InputSerialPort" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -39,7 +39,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OutputAddressPort" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">8000</Value>
     </Setting>
     <Setting Name="GamepadButtonMap" Type="System.String" Scope="User">
       <Value Profile="(Default)">{}</Value>
@@ -57,7 +57,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="TCodeVersion" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TCode v0.2</Value>
+      <Value Profile="(Default)">TCode</Value>
     </Setting>
     <Setting Name="ShowBLEMessage" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

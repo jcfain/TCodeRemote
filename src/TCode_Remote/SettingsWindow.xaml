@@ -8,17 +8,11 @@
         mc:Ignorable="d"
         Title="Settings" Height="450" Width="800" ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner">
-    <Grid>
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="White" Offset="0"/>
-                <GradientStop Color="#FF6A6A6A" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
-        <CheckBox x:Name="UseUDP" Content="Use UDP for network stream" HorizontalAlignment="Left" Margin="468,61,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.19,-1.356" Click="UseUDP_Clicked" IsChecked="{Binding Path=(localHandler:SettingsHandler.UseUDP), UpdateSourceTrigger=PropertyChanged}"/>
-        <Button x:Name="ResetSettingsBtn" Content="Reset ALL Settings" HorizontalAlignment="Left" Margin="468,81,0,0" VerticalAlignment="Top" Width="112" Click="ResetSettingsBtn_Click" Height="24"/>
-        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="689,370,0,0" VerticalAlignment="Top" Width="75" Height="24" RenderTransformOrigin="0.512,0.453" Click="SaveButton_Click"/>
-        <DataGrid x:Name="ChannelGrid" HorizontalAlignment="Left" Height="324" Margin="10,41,0,0" VerticalAlignment="Top" Width="439" ItemsSource="{Binding ChannelData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" >
+    <Grid Background="#FF33363C">
+        <CheckBox x:Name="UseUDP" Content="Use UDP for network stream" HorizontalAlignment="Left" Margin="468,61,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.19,-1.356" Click="UseUDP_Clicked" IsChecked="{Binding Path=(localHandler:SettingsHandler.UseUDP), UpdateSourceTrigger=PropertyChanged}" Foreground="White"/>
+        <Button x:Name="ResetSettingsBtn" Content="Reset ALL Settings" HorizontalAlignment="Left" Margin="468,81,0,0" VerticalAlignment="Top" Width="112" Click="ResetSettingsBtn_Click" Height="24" Background="White" Foreground="Black"/>
+        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="689,370,0,0" VerticalAlignment="Top" Width="75" Height="24" RenderTransformOrigin="0.512,0.453" Click="SaveButton_Click" Background="White" Foreground="Black"/>
+        <DataGrid x:Name="ChannelGrid" HorizontalAlignment="Left" Height="324" Margin="10,41,0,0" VerticalAlignment="Top" Width="439" ItemsSource="{Binding ChannelData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" Foreground="Black" BorderBrush="#FF686868" Background="White" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Key" Binding="{Binding Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="Friendly Name" Binding="{Binding Value.FriendlyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -28,9 +22,10 @@
                 <DataGridTextColumn Header="Max" Binding="{Binding Value.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="TCode Channels" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="AddChannelBtn" Content="Add" HorizontalAlignment="Left" Margin="374,372,0,0" VerticalAlignment="Top" Width="75" Click="AddChannelBtn_Click"/>
-        <Button x:Name="RemoveChannelBtn" Content="Remove" HorizontalAlignment="Left" Margin="10,372,0,0" VerticalAlignment="Top" Width="75" Click="RemoveChannelBtn_Click"/>
-        <CheckBox x:Name="DebugModeCheckbox" Content="Debug mode" HorizontalAlignment="Left" Margin="468,41,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=(localHandler:SettingsHandler.IsDebugMode), UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Content="TCode Channels" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <Button x:Name="AddChannelBtn" Content="Add" HorizontalAlignment="Left" Margin="374,372,0,0" VerticalAlignment="Top" Width="75" Click="AddChannelBtn_Click" Background="White" Foreground="Black"/>
+        <Button x:Name="RemoveChannelBtn" Content="Remove" HorizontalAlignment="Left" Margin="10,372,0,0" VerticalAlignment="Top" Width="75" Click="RemoveChannelBtn_Click" Background="White" Foreground="Black"/>
+        <CheckBox x:Name="DebugModeCheckbox" Content="Debug mode" HorizontalAlignment="Left" Margin="468,41,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=(localHandler:SettingsHandler.IsDebugMode), UpdateSourceTrigger=PropertyChanged}" Foreground="White"/>
+        <Label Content="{Binding Path=(localHandler:SettingsHandler.AppVersion)}" HorizontalAlignment="Left" Margin="669,16,0,0" VerticalAlignment="Top" Height="26" Width="115" Foreground="White"/>
     </Grid>
 </Window>

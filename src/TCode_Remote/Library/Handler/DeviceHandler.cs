@@ -3,6 +3,7 @@ using TCode_Remote.Library.Interfaces;
 using TCode_Remote.Library.Reference.Enum;
 using System;
 using System.ComponentModel;
+using System.Web.Script.Serialization;
 
 namespace TCode_Remote.Library.Handler
 {
@@ -19,6 +20,8 @@ namespace TCode_Remote.Library.Handler
 		protected OSRRemoteDeviceMode _mode { get; set; }
 		protected bool _isConnected = false;
 		protected bool _isRunning = false;
+
+		protected JavaScriptSerializer _serializer = new JavaScriptSerializer();
 
 		protected void OnPropertyChanged<T>(object instance, T property)
 		{

@@ -17,6 +17,9 @@ namespace TCode_Remote.Library.Handler
 		public const string DEVICE_CONNECT = "Searching";
 		public static event EventHandler PropertyChanged;
 
+		public static readonly int TCODE_MAX = 9999;
+		public static readonly int TCODE_MID = 5000;
+		public static readonly int TCODE_MIN = 0;
 
 		private static string _tCodeVersion;
 		public static string TCodeVersion
@@ -27,6 +30,10 @@ namespace TCode_Remote.Library.Handler
 				_tCodeVersion = value;
 				PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(TCodeVersion)));
 			}
+		}
+		public static string AppVersion
+		{
+			get { return $"App Version: {Settings.Default.Version}"; }
 		}
 
 		public static string HandShakeChannel
@@ -266,7 +273,14 @@ namespace TCode_Remote.Library.Handler
 					ResetSettings();
 					Log.Dialog("New version.", " New version detected and a data migration is required.\n Resetting user settings.");
 					Settings.Default.Version = versionDouble;
+				} 
+				else if(Settings.Default.Version < 0.16)
+				{
+					ResetSettings();
+					Log.Dialog("New version.", "Resetting user settings for Tcode V0.3");
+					Settings.Default.Version = versionDouble;
 				}
+				
 
 				_availableAxis = new JavaScriptSerializer().Deserialize<Dictionary<string, ChannelNameModel>>(Settings.Default.AvailableAxis);
 				_gamepadButtonMap = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(Settings.Default.GamepadButtonMap);
@@ -324,21 +338,30 @@ namespace TCode_Remote.Library.Handler
 		{
 			_availableAxis = new Dictionary<string, ChannelNameModel>()
 			{
-				{AxisNames.None, new ChannelNameModel() { FriendlyName = AxisNames.None, AxisName = AxisNames.None, Channel = AxisNames.None, Mid = 500, Min = 1, Max = 999 } },
-				{AxisNames.TcXUpDownL0, new ChannelNameModel() { FriendlyName = "X (Up/down L0)", AxisName = AxisNames.TcXUpDownL0, Channel = "L0", Mid = 500, Min = 1, Max = 999 } },
-				{AxisNames.TcXDownL0, new ChannelNameModel() { FriendlyName = "X (Down)", AxisName = AxisNames.TcXDownL0, Channel = "L0", Mid = 500, Min = 1, Max = 999 } },
-				{AxisNames.TcXUpL0, new ChannelNameModel() { FriendlyName = "X (Up)", AxisName = AxisNames.TcXUpL0, Channel = "L0", Mid = 500, Min = 1, Max = 999 } },
-				{AxisNames.TcXRollR2, new ChannelNameModel() { FriendlyName = "X (Roll R2)", AxisName = AxisNames.TcXRollR2, Channel = "R2", Mid = 500, Min = 1, Max = 999 } },
-				{AxisNames.TcXRollForwardR2, new ChannelNameModel() { FriendlyName = "X (Roll Forward)", AxisName = AxisNames.TcXRollForwardR2, Channel = "R2", Mid = 500, Min = 1, Max = 999 } },
-				{AxisNames.TcXRollBackR2, new ChannelNameModel() { FriendlyName = "X (Roll Back)", AxisName = AxisNames.TcXRollBackR2, Channel = "R2", Mid = 500, Min = 1, Max = 999 } },
-				{AxisNames.TcYRollR1, new ChannelNameModel() { FriendlyName = "Y (Roll R1)", AxisName = AxisNames.TcYRollR1, Channel = "R1", Mid = 500, Min = 1, Max = 999 } },
-				{AxisNames.TcYRollLeftR1, new ChannelNameModel() { FriendlyName = "Y (Roll Left)", AxisName = AxisNames.TcYRollLeftR1, Channel = "R1", Mid = 500, Min = 1, Max = 999 } },
-				{AxisNames.TcYRollRightR1, new ChannelNameModel() { FriendlyName = "Y (Roll Right)", AxisName = AxisNames.TcYRollRightR1, Channel = "R1", Mid = 500, Min = 1, Max = 999 } },
-				{AxisNames.TcTwistR0, new ChannelNameModel() { FriendlyName = "Twist R0", AxisName = AxisNames.TcTwistR0, Channel = "R0", Mid = 500, Min = 480, Max = 520 } },
-				{AxisNames.TcTwistCWR0, new ChannelNameModel() { FriendlyName = "Twist (CW)", AxisName = AxisNames.TcTwistCWR0, Channel = "R0", Mid = 500, Min = 480, Max = 520 } },
-				{AxisNames.TcTwistCCWR0, new ChannelNameModel() { FriendlyName = "Twist (CCW)", AxisName = AxisNames.TcTwistCCWR0, Channel = "R0", Mid = 500, Min = 480, Max = 520 } },
-				{AxisNames.TcVibV0, new ChannelNameModel() { FriendlyName = "Vib V0", AxisName = AxisNames.TcVibV0, Channel = "V0", Mid = 500, Min = 1, Max = 999 } },
-				{AxisNames.TcPumpV2, new ChannelNameModel() { FriendlyName = "Pump V2", AxisName = AxisNames.TcPumpV2, Channel = "V2", Mid = 500, Min = 1, Max = 999 } }
+				{AxisNames.None, new ChannelNameModel() { FriendlyName = AxisNames.None, AxisName = AxisNames.None, Channel = AxisNames.None, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.Stroke, new ChannelNameModel() { FriendlyName = "Stroke", AxisName = AxisNames.Stroke, Channel = AxisNames.Stroke, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.StrokeDown, new ChannelNameModel() { FriendlyName = "Stroke (Down)", AxisName = AxisNames.StrokeDown, Channel = AxisNames.Stroke, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.StrokeUp, new ChannelNameModel() { FriendlyName = "Stroke (Up)", AxisName = AxisNames.StrokeUp, Channel = AxisNames.Stroke, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.Sway, new ChannelNameModel() { FriendlyName = "Sway", AxisName = AxisNames.Sway, Channel = AxisNames.Sway, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.SwayLeft, new ChannelNameModel() { FriendlyName = "Sway Left", AxisName = AxisNames.SwayLeft, Channel = AxisNames.Sway, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.SwayRight, new ChannelNameModel() { FriendlyName = "Sway Right", AxisName = AxisNames.SwayRight, Channel = AxisNames.Sway, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.Surge, new ChannelNameModel() { FriendlyName = "Surge", AxisName = AxisNames.Surge, Channel = AxisNames.Surge, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.SurgeBack, new ChannelNameModel() { FriendlyName = "Surge Back", AxisName = AxisNames.SurgeBack, Channel = AxisNames.Surge, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.SurgeForward, new ChannelNameModel() { FriendlyName = "Surge Forward", AxisName = AxisNames.SurgeForward, Channel = AxisNames.Surge, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.Pitch, new ChannelNameModel() { FriendlyName = "Pitch", AxisName = AxisNames.Pitch, Channel = AxisNames.Pitch, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.PitchForward, new ChannelNameModel() { FriendlyName = "Pitch Forward", AxisName = AxisNames.PitchForward, Channel = AxisNames.Pitch, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.PitchBack, new ChannelNameModel() { FriendlyName = "Pitch Back", AxisName = AxisNames.PitchBack, Channel = AxisNames.Pitch, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.Roll, new ChannelNameModel() { FriendlyName = "Roll", AxisName = AxisNames.Roll, Channel = AxisNames.Roll, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.RollLeft, new ChannelNameModel() { FriendlyName = "Roll Left", AxisName = AxisNames.RollLeft, Channel = AxisNames.Roll, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.RollRight, new ChannelNameModel() { FriendlyName = "Roll Right", AxisName = AxisNames.RollRight, Channel = AxisNames.Roll, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.Twist, new ChannelNameModel() { FriendlyName = "Twist", AxisName = AxisNames.Twist, Channel = AxisNames.Twist, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.TwistCW, new ChannelNameModel() { FriendlyName = "Twist (CW)", AxisName = AxisNames.TwistCW, Channel = AxisNames.Twist, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.TwistCCW, new ChannelNameModel() { FriendlyName = "Twist (CCW)", AxisName = AxisNames.TwistCCW, Channel = AxisNames.Twist, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.Vib0, new ChannelNameModel() { FriendlyName = "Vib 0", AxisName = AxisNames.Vib0, Channel = AxisNames.Vib0, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.Lube, new ChannelNameModel() { FriendlyName = "Lube", AxisName = AxisNames.Lube, Channel = AxisNames.Lube, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.Squeeze, new ChannelNameModel() { FriendlyName = "Squeeze", AxisName = AxisNames.Squeeze, Channel = AxisNames.Squeeze, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.Suck, new ChannelNameModel() { FriendlyName = "Suck", AxisName = AxisNames.Suck, Channel = AxisNames.Suck, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } },
+				{AxisNames.SuckLevel, new ChannelNameModel() { FriendlyName = "Suck Level", AxisName = AxisNames.SuckLevel, Channel = AxisNames.SuckLevel, Mid = TCODE_MID, Min = TCODE_MIN, Max = TCODE_MAX } }
 			};
 		}
 
@@ -347,14 +370,14 @@ namespace TCode_Remote.Library.Handler
 			_gamepadButtonMap = new Dictionary<string, string>
 			{
 				{ "None", AxisNames.None },
-				{ GamepadAxisNames.LeftXAxis, AxisNames.TcVibV0 },
-				{ GamepadAxisNames.LeftYAxis,  AxisNames.TcXUpDownL0 },
-				{ GamepadAxisNames.RightYAxis ,  AxisNames.TcXRollR2  },
-				{ GamepadAxisNames.RightXAxis, AxisNames.TcYRollR1  },
-				{ GamepadAxisNames.RightTrigger, AxisNames.TcTwistCWR0 },
-				{ GamepadAxisNames.LeftTrigger, AxisNames.TcTwistCCWR0 },
-				{ GamepadAxisNames.RightBumper, AxisNames.None },
-				{ GamepadAxisNames.LeftBumper, AxisNames.None },
+				{ GamepadAxisNames.LeftXAxis, AxisNames.Twist },
+				{ GamepadAxisNames.LeftYAxis,  AxisNames.Stroke },
+				{ GamepadAxisNames.RightYAxis , AxisNames.Pitch  },
+				{ GamepadAxisNames.RightXAxis, AxisNames.Roll  },
+				{ GamepadAxisNames.RightTrigger, AxisNames.SurgeForward },
+				{ GamepadAxisNames.LeftTrigger, AxisNames.SurgeBack },
+				{ GamepadAxisNames.RightBumper, AxisNames.SwayRight },
+				{ GamepadAxisNames.LeftBumper, AxisNames.SwayLeft },
 				{ GamepadAxisNames.Select, AxisNames.None },
 				{ GamepadAxisNames.Start, AxisNames.None },
 				{ GamepadAxisNames.X, AxisNames.None },
