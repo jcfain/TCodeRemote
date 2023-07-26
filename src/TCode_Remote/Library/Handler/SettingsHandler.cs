@@ -285,7 +285,9 @@ namespace TCode_Remote.Library.Handler
 			try
 			{
 				var versionFull = GetVersion();
-				var versionDouble = versionFull.Major + (versionFull.Minor / 100.00);
+				// Yuck! convert the whole number to a decimal. Should never need more than 3 decimals. 
+				// TODO: Git gud at math?
+				var versionDouble = versionFull.Major + versionFull.Minor < 10 ? (versionFull.Minor / 10) : versionFull.Minor < 100 ? (versionFull.Minor / 100.00) : (versionFull.Minor / 1000.00);
 				if (Settings.Default.Version == 0)
 				{
 					ResetSettings();
