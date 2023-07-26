@@ -123,14 +123,14 @@ namespace TCode_Remote.Library.Handler
 					if (handler != null)
 					{
 						var eventArgs = new DataReceivedEventArgs();
-						if (_device.GetType() == typeof(TcpHandler) || _device.GetType() == typeof(UdpHandler))
-						{
+						//if (_device.GetType() == typeof(TcpHandler) || _device.GetType() == typeof(UdpHandler))
+						//{
 							eventArgs.GamepadData = axisValues;
-						} 
-						else
-						{
+						//} 
+						//else
+						//{
 							eventArgs.Data = _tcodeFactory.FormatTCode(axisValues);
-						}
+						//}
 						handler(this, eventArgs);
 					}
 				}

@@ -771,13 +771,15 @@ namespace TCode_Remote
 
 		private void UseUDPInput_Clicked(object sender, RoutedEventArgs e)
 		{
-			Log.Dialog("Input Protocol changed", "Please restart the app.\nMake sure the other end has the same value.");
+			//Log.Dialog("Input Protocol changed", "Make sure the other end has the same value.");
 			if (SettingsHandler.UseUDPInput)
 			{
+				//Log.Dialog("Input Protocol changed", "Make sure the source has UDP as output.");
 				_inputDevice = InputUdpAddresshandler;
 			}
 			else
 			{
+				//Log.Dialog("Input Protocol changed", "Make sure the source has TCP as output. (UDP checkbox unchecked)");
 				_inputDevice = InputTcpAddresshandler;
 			}
 		}
@@ -787,10 +789,12 @@ namespace TCode_Remote
 			//Log.Dialog("Output Protocol changed", "Please restart the app.\nMake sure the other end has the same value.");
 			if (SettingsHandler.UseUDPOutput)
 			{
+				//Log.Dialog("Output Protocol changed", "Make sure the destination has UDP as input.");
 				_outputDevice = OutputUdpAddresshandler;
 			}
 			else
 			{
+				//Log.Dialog("Output Protocol changed", "Make sure the destination has TCP as input. (UDP checkbox unchecked)");
 				_outputDevice = OutputTcpAddresshandler;
 			}
 		}

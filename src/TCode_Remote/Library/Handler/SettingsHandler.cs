@@ -265,7 +265,18 @@ namespace TCode_Remote.Library.Handler
 				PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(ShowBLEMessage)));
 			}
 		}
-
+		private static bool _gamepadJSONOverNetwork;
+		public static bool GamepadJSONOverNetwork
+		{
+			get { return _gamepadJSONOverNetwork; }
+			set
+			{
+				Settings.Default.GamepadJSONOverNetwork = value;
+				_gamepadJSONOverNetwork = value;
+				PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(GamepadJSONOverNetwork)));
+			}
+		}
+		
 
 		private static bool _dataResetRequired = false;
 
@@ -315,6 +326,7 @@ namespace TCode_Remote.Library.Handler
 				_outputDevice = string.IsNullOrEmpty(Settings.Default.OutputDevice) ? OSRRemoteOutputMode.Serial :
 					(OSRRemoteOutputMode)Enum.Parse(typeof(OSRRemoteOutputMode), Settings.Default.OutputDevice);
 				_showBLEMessage = Settings.Default.ShowBLEMessage;
+				_gamepadJSONOverNetwork = Settings.Default.GamepadJSONOverNetwork;
 			} 
 			catch(Exception e)
 			{

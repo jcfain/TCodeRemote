@@ -23,6 +23,7 @@ namespace TCode_Remote.Library.Handler
 		private TCodeFactory _tcodeFactory;
 		private Socket _sListener;
 		IPEndPoint _ipEndPoint;
+		private string _lastTCodeSent;
 
 		public TcpHandler(OSRRemoteDeviceMode mode)
 		{
@@ -108,10 +109,25 @@ namespace TCode_Remote.Library.Handler
 			{
 				try
 				{
-					var serializedstring = _serializer.Serialize(e.GamepadData);
-					Log.Debug("Trying to send: " + serializedstring);
+					if (_lastTCodeSent == e.Data)
+					{
+						return;
+					}
+					byte[] senddata;
+					if (SettingsHandler.GamepadJSONOverNetwork)
+					{
+						var serializedstring = _serializer.Serialize(e.GamepadData);
+						Log.Debug("sentData: " + serializedstring);
+						senddata = Encoding.ASCII.GetBytes(serializedstring);
+					}
+					else
+					{
+						Log.Debug("sentData: " + e.Data);
+						senddata = Encoding.ASCII.GetBytes(e.Data);
+					}
 					if (IsRunning)
-						SendToOutputClient(serializedstring);
+						SendToOutputClient(e.Data);
+					_lastTCodeSent = e.Data;
 				}
 				catch (Exception error)
 				{

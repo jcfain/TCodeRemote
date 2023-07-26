@@ -274,5 +274,17 @@ namespace TCode_Remote.Properties {
                 this["UseUDPInput"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GamepadJSONOverNetwork {
+            get {
+                return ((bool)(this["GamepadJSONOverNetwork"]));
+            }
+            set {
+                this["GamepadJSONOverNetwork"] = value;
+            }
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace TCode_Remote.Library.Handler
 		private int _port;
 		private UdpClient _udpClient;
 		private TCodeFactory _tcodeFactory;
+		private string _lastTCodeSent;
 
 		public UdpHandler(OSRRemoteDeviceMode mode)
 		{
@@ -113,11 +114,25 @@ namespace TCode_Remote.Library.Handler
 			{
 				try
 				{
-					var serializedstring = _serializer.Serialize(e.GamepadData);
-					Log.Debug("sentData: " + serializedstring);
-					Byte[] senddata = Encoding.ASCII.GetBytes(serializedstring);
-					if(IsRunning)
+					if(_lastTCodeSent == e.Data)
+					{
+						return;
+					}
+					byte[] senddata;
+					if (SettingsHandler.GamepadJSONOverNetwork)
+					{
+						var serializedstring = _serializer.Serialize(e.GamepadData);
+						Log.Debug("sentData: " + serializedstring);
+						senddata = Encoding.ASCII.GetBytes(serializedstring);
+					} 
+					else
+					{
+						Log.Debug("sentData: " + e.Data);
+						senddata = Encoding.ASCII.GetBytes(e.Data);
+					}
+					if (IsRunning)
 						await _udpClient.SendAsync(senddata, senddata.Length);
+					_lastTCodeSent = e.Data;
 				}
 				catch (Exception error)
 				{
